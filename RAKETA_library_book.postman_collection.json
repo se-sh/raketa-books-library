@@ -1,0 +1,508 @@
+{
+	"info": {
+		"_postman_id": "905bb5b1-f2a9-4b37-8b11-a019a07480cb",
+		"name": "RAKETA library book",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"login\": \"testuser\",\r\n  \"password\": \"testpass\",\r\n  \"password_confirm\": \"testpass\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"register"
+					],
+					"query": [
+						{
+							"key": "login",
+							"value": "sergey",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "111",
+							"disabled": true
+						},
+						{
+							"key": "password_confirm",
+							"value": "111",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "All users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"login\": \"\",\r\n  \"password\": \"testpass\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create book",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJib29rLWxpYnJhcnktYXBpIiwiaWF0IjoxNzY4MDgyMTgzLCJleHAiOjE3NjgwODU3ODMsInN1YiI6MSwibG9naW4iOiJ0ZXN0dXNlcjEifQ.wd-nt3GI7PqKgf239WJNsSib53f1euAlWF5zxpYPKsE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"Новая книга\",\r\n  \"text\": \"Текст новой книги\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost/books",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create book from Google",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJib29rLWxpYnJhcnktYXBpIiwiaWF0IjoxNzY4MDgyMTgzLCJleHAiOjE3NjgwODU3ODMsInN1YiI6MSwibG9naW4iOiJ0ZXN0dXNlcjEifQ.wd-nt3GI7PqKgf239WJNsSib53f1euAlWF5zxpYPKsE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"externalId\": \"HvZ-DQAAQBAJ\",\r\n  \"title\": \"English Grammar. Test File\",\r\n  \"url\": \"https://play.google.com/store/books/details?id=HvZ-DQAAQBAJ\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost/books",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create book from MIF",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJib29rLWxpYnJhcnktYXBpIiwiaWF0IjoxNzY4MDgyMTgzLCJleHAiOjE3NjgwODU3ODMsInN1YiI6MSwibG9naW4iOiJ0ZXN0dXNlcjEifQ.wd-nt3GI7PqKgf239WJNsSib53f1euAlWF5zxpYPKsE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"externalId\": \"14745\",\r\n  \"title\": \"Развитие силы воли\",\r\n  \"url\": \"http://www.mann-ivanov-ferber.ru/catalog/product/razvitie-sily-voli/\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost/books",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create book from file",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJib29rLWxpYnJhcnktYXBpIiwiaWF0IjoxNzY4MTM0MTQ3LCJleHAiOjE3NjgxMzc3NDcsInN1YiI6NSwibG9naW4iOiJzZXJnZXkifQ.nWfCQ4B5t8sI5dv008bBHMJFw1Rz3KV8mUOZ-jvp9Tk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "title",
+							"value": "Моя книга из файла",
+							"type": "text"
+						},
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/D:/urls.txt"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/books",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Open book by ID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJib29rLWxpYnJhcnktYXBpIiwiaWF0IjoxNzY4MDgyMTgzLCJleHAiOjE3NjgwODU3ODMsInN1YiI6MSwibG9naW4iOiJ0ZXN0dXNlcjEifQ.wd-nt3GI7PqKgf239WJNsSib53f1euAlWF5zxpYPKsE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/books/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"books",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Change book by ID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJib29rLWxpYnJhcnktYXBpIiwiaWF0IjoxNzY4MDgyMTgzLCJleHAiOjE3NjgwODU3ODMsInN1YiI6MSwibG9naW4iOiJ0ZXN0dXNlcjEifQ.wd-nt3GI7PqKgf239WJNsSib53f1euAlWF5zxpYPKsE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"Обновлённая книга\",\r\n  \"text\": \"Новый текст книги\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost/books/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"books",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete book by ID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJib29rLWxpYnJhcnktYXBpIiwiaWF0IjoxNzY4MDgyMTgzLCJleHAiOjE3NjgwODU3ODMsInN1YiI6MSwibG9naW4iOiJ0ZXN0dXNlcjEifQ.wd-nt3GI7PqKgf239WJNsSib53f1euAlWF5zxpYPKsE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/books/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"books",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Restore book by ID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJib29rLWxpYnJhcnktYXBpIiwiaWF0IjoxNzY4MDgyMTgzLCJleHAiOjE3NjgwODU3ODMsInN1YiI6MSwibG9naW4iOiJ0ZXN0dXNlcjEifQ.wd-nt3GI7PqKgf239WJNsSib53f1euAlWF5zxpYPKsE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/books/3/restore",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"books",
+						"3",
+						"restore"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Grant access by ID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJib29rLWxpYnJhcnktYXBpIiwiaWF0IjoxNzY4MDgyMTgzLCJleHAiOjE3NjgwODU3ODMsInN1YiI6MSwibG9naW4iOiJ0ZXN0dXNlcjEifQ.wd-nt3GI7PqKgf239WJNsSib53f1euAlWF5zxpYPKsE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"user_id\": 2\r\n}\r\n"
+				},
+				"url": {
+					"raw": "http://localhost/users/2/access",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"users",
+						"2",
+						"access"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all user books",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJib29rLWxpYnJhcnktYXBpIiwiaWF0IjoxNzY4MTM0MTQ3LCJleHAiOjE3NjgxMzc3NDcsInN1YiI6NSwibG9naW4iOiJzZXJnZXkifQ.nWfCQ4B5t8sI5dv008bBHMJFw1Rz3KV8mUOZ-jvp9Tk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/books",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get books list by user ID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJib29rLWxpYnJhcnktYXBpIiwiaWF0IjoxNzY4MDg5MTIwLCJleHAiOjE3NjgwOTI3MjAsInN1YiI6MSwibG9naW4iOiJ0ZXN0dXNlcjEifQ.5byi8e0M1G-w4f0qQS8B5l3FabcbALPhPDOSlZtCyFs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/users/0/books",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"users",
+						"0",
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search external book Google",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/search?source=google&q=test",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"search"
+					],
+					"query": [
+						{
+							"key": "source",
+							"value": "google"
+						},
+						{
+							"key": "q",
+							"value": "test"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search external book MIF",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/search?source=mif&q=test",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"search"
+					],
+					"query": [
+						{
+							"key": "source",
+							"value": "mif"
+						},
+						{
+							"key": "q",
+							"value": "test"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
