@@ -1,0 +1,15 @@
+{
+  "name": "raketa/book-library-api",
+  "description": "Book library",
+  "type": "project",
+  "require": {
+    "php": "^8.2",
+    "firebase/php-jwt": "^6.10",
+    "guzzlehttp/guzzle": "^7.9"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/"
+    }
+  }
+}
