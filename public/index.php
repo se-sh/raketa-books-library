@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
+use App\Core\DataBase;
 use App\Core\Router;
-use App\Core\Database;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -25,7 +25,7 @@ try {
     $router = new Router($routes, $db);
     $router->run();
 } catch (PDOException $exception) {
-    error_log("DB " . $exception->getMessage());
+    error_log('DB ' . $exception->getMessage());
     http_response_code(500);
     header('Content-Type: application/json');
     echo json_encode(['error' => 'Database connection error']);
