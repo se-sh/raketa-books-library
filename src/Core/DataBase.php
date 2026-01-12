@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Core;
 
+use Exception;
 use PDO;
 use PDOException;
-use Exception;
 
 class DataBase
 {

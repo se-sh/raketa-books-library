@@ -11,8 +11,8 @@ class Controller
     /**
      * Send JSON response with specified HTTP status code
      *
-     * @param mixed $data     - response data to encode as JSON
-     * @param int $statusCode - (optional) HTTP status code (default: 200)
+     * @param mixed $data       - response data to encode as JSON
+     * @param int   $statusCode - (optional) HTTP status code (default: 200)
      *
      * @return void
      */
@@ -27,9 +27,9 @@ class Controller
     /**
      * Read and parse JSON request body from php://input
      *
-     * @throws Exception
-     *
      * @return array $data - parsed JSON data
+     *
+     * @throws Exception
      */
     protected function getJsonInput() : array
     {
@@ -55,9 +55,9 @@ class Controller
      *
      * @param array $file - attached file
      *
-     * @throws Exception
-     *
      * @return string $content - content of file
+     *
+     * @throws Exception
      */
     protected function loadFile(array $file) : string
     {

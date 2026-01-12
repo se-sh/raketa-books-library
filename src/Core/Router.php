@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Core;
 
 use Exception;
-use Throwable;
-use PDOException;
 use PDO;
+use PDOException;
+use Throwable;
 
 class Router
 {
@@ -24,9 +24,9 @@ class Router
     /**
      * Main router dispatcher
      *
-     * @throws Exception
-     *
      * @return void
+     *
+     * @throws Exception
      */
     public function run() : void
     {
@@ -51,11 +51,45 @@ class Router
     }
 
     /**
+     * Request handler with exceptions context
+     *
+     * @param callable $callback - request handler
+     *
+     * @return void
+     */
+    protected function runRequest(callable $callback) : void
+    {
+        try {
+            $result = $callback();
+
+            if ($result !== null) {
+                $this->json($result, 200);
+            }
+        } catch (PDOException $exception) {
+            error_log('DB ' . $exception->getMessage());
+            $this->json(['error' => 'Database error'], 500);
+        } catch (Exception $exception) {
+            /*
+            $status = match($error->getCode()) {
+                400, 422 => 400,
+                401 => 401,
+                404 => 404,
+                default => 400
+            };
+            */
+            $status = $exception->getCode() ?: 400;
+            $this->json(['error' => $exception->getMessage()], $status);
+        } catch (Throwable $exception) {
+            $this->json(['error' => 'Internal server error'], 500);
+        }
+    }
+
+    /**
      * Matches URI against route pattern with parameter extraction
      *
      * @param string $routeUri - route pattern ('/users/{id}')
      * @param string $uri      - request URI path ('/users/123')
-     * @param array &$params   - [output] extracted route parameters by name
+     * @param array  &$params  - [output] extracted route parameters by name
      *
      * @return bool true if URI matches pattern, false otherwise
      */
@@ -85,11 +119,11 @@ class Router
      * Create instance of controller and call specified method with route parameters
      *
      * @param string $handler - Controller@method notation
-     * @param array $params   - route parameters extracted by match() method
-     *
-     * @throws Exception
+     * @param array  $params  - route parameters extracted by match() method
      *
      * @return void
+     *
+     * @throws Exception
      */
     private function callHandler(string $handler, array $params) : void
     {
@@ -106,45 +140,13 @@ class Router
             throw new Exception('Method not found', 500);
         }
 
-        $this->runRequest(function() use ($controller, $methodName, $params) {
-            return $controller->$methodName($params);
+        $this->runRequest(function () use ($controller, $methodName, $params) {
+            return $controller->{$methodName}($params);
         });
     }
 
-    /**
-     * Request handler with exceptions context
-     *
-     * @param callable $callback - request handler
-     *
-     * @return void
-     */
-    protected function runRequest(callable $callback) : void {
-        try {
-            $result = $callback();
-
-            if ($result !== null) {
-                $this->json($result, 200);
-            }
-        } catch (PDOException $exception) {
-            error_log("DB " . $exception->getMessage());
-            $this->json(['error' => 'Database error'], 500);
-        } catch (Exception $exception) {
-            /*
-            $status = match($error->getCode()) {
-                400, 422 => 400,
-                401 => 401,
-                404 => 404,
-                default => 400
-            };
-            */
-            $status = $exception->getCode() ?: 400;
-            $this->json(['error' => $exception->getMessage()], $status);
-        } catch (Throwable $exception) {
-            $this->json(['error' => 'Internal server error'], 500);
-        }
-    }
-
-    private function json(array $data, int $status = 200) : void {
+    private function json(array $data, int $status = 200) : void
+    {
         http_response_code($status);
         header('Content-Type: application/json');
         echo json_encode($data);

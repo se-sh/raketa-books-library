@@ -8,7 +8,7 @@ return [
     ['POST', '/login', 'AuthController@login'],
 
     // Show all users
-    ['GET',  '/users', 'UserController@index'],
+    ['GET', '/users', 'UserController@index'],
 
     // Allow access to library for another user by user ID
     ['POST', '/users/{id}/access', 'UserController@grant'],
