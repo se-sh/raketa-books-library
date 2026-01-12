@@ -21,9 +21,9 @@ class LibraryAccess
      * @param int $ownerId  - ID of user who allow access
      * @param int $targetId - ID of user who accept access
      *
-     * @throws PDOException
-     *
      * @return bool - true if user has access, false otherwise
+     *
+     * @throws PDOException
      */
     public function hasAccess(int $ownerId, int $targetId) : bool
     {

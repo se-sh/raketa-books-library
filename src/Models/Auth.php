@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Models\User;
+use Exception;
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 use PDO;
 use PDOException;
-use Firebase\JWT\Key;
-use Firebase\JWT\JWT;
-use Exception;
 
-class Auth {
+class Auth
+{
     private PDO $db;
     private User $userModel;
 
@@ -37,9 +38,9 @@ class Auth {
     /**
      * Authenticate user from Bearer token in Authorization header
      *
-     * @throws Exception
-     *
      * @return array - decoded JWT payload containing user claim
+     *
+     * @throws Exception
      */
     public function authenticate() : array
     {
@@ -62,9 +63,9 @@ class Auth {
      * @param string $login    - user login
      * @param string $password - user pass
      *
-     * @throws Exception
-     *
      * @return array JSON with token, user ID, login
+     *
+     * @throws Exception
      */
     public function login(string $login, string $password) : array
     {
@@ -78,43 +79,20 @@ class Auth {
             throw new Exception('Invalid login or password', 401);
         }
 
-        $token = $this->generateToken((int)$user['id'], $user['login']);
+        $token = $this->generateToken((int) $user['id'], $user['login']);
 
         return [
             'token' => $token,
-            'user'  => [
-                'id'    => (int)$user['id'],
+            'user' => [
+                'id' => (int) $user['id'],
                 'login' => $user['login'],
             ],
         ];
     }
 
-    public function getToken(int $userId, string $login) {
-        return $this->generateToken($userId, $login);
-    }
-
-    /**
-     * Generate serialized JWT token for user authentication
-     *
-     * @param int $userId   - unique user identifier
-     * @param string $login - user login for identification
-     *
-     * @return string - JWT token
-     */
-    private function generateToken(int $userId, string $login) : string
+    public function getToken(int $userId, string $login)
     {
-        $now   = time();
-        $exp   = $now + $this->jwtLifetime;
-
-        $payload = [
-            'iss' => $this->jwtIssuer,
-            'iat' => $now,
-            'exp' => $exp,
-            'sub' => $userId,
-            'login' => $login,
-        ];
-
-        return JWT::encode($payload, $this->jwtSecret, 'HS256');
+        return $this->generateToken($userId, $login);
     }
 
     /**
@@ -128,6 +106,30 @@ class Auth {
     {
         $decoded = JWT::decode($token, new Key($this->jwtSecret, 'HS256'));
 
-        return (array)$decoded;
+        return (array) $decoded;
+    }
+
+    /**
+     * Generate serialized JWT token for user authentication
+     *
+     * @param int    $userId - unique user identifier
+     * @param string $login  - user login for identification
+     *
+     * @return string - JWT token
+     */
+    private function generateToken(int $userId, string $login) : string
+    {
+        $now = time();
+        $exp = $now + $this->jwtLifetime;
+
+        $payload = [
+            'iss' => $this->jwtIssuer,
+            'iat' => $now,
+            'exp' => $exp,
+            'sub' => $userId,
+            'login' => $login,
+        ];
+
+        return JWT::encode($payload, $this->jwtSecret, 'HS256');
     }
 }

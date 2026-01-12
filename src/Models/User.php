@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use PDO;
-use Firebase\JWT\Key;
-use Firebase\JWT\JWT;
-use Exception;
 use App\Models\Auth;
+use Exception;
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+use PDO;
 
 class User
 {
@@ -28,8 +28,6 @@ class User
 
     public function __construct(PDO $db)
     {
-
-
         $this->db = $db;
         /*
         $env = require __DIR__ . '/../../.env.php';
@@ -50,9 +48,9 @@ class User
      * @param string $login        - unique user login identifier
      * @param string $passwordHash - bcrypt password hash (60 chars)
      *
-     * @throws PDOException
-     *
      * @return int - generated user ID
+     *
+     * @throws PDOException
      */
     public function create(string $login, string $passwordHash) : int
     {
@@ -77,9 +75,9 @@ class User
      *
      * @param string $login
      *
-     * @throws PDOException
+     * @return null|array user record or null if not found
      *
-     * @return array|null user record or null if not found
+     * @throws PDOException
      */
     public function getUserByLogin(string $login) : ?array
     {
@@ -108,9 +106,9 @@ class User
     /**
      * Get list of all users (ID + login)
      *
-     * @throws PDOException
-     *
      * @return array - list of user
+     *
+     * @throws PDOException
      */
     public function getAllUsers() : array
     {
@@ -136,9 +134,9 @@ class User
      * @param string $password
      * @param string $passwordConfirm
      *
-     * @throws Exception
-     *
      * @return array - token, user ID, user login
+     *
+     * @throws Exception
      */
     public function createUser(string $login, string $password, string $passwordConfirm) : array
     {
@@ -163,7 +161,7 @@ class User
 
         //$token = $this->generateToken((int)$userId, $login);
         $this->authModel = new Auth($this->db);
-        $token = $this->authModel->getToken((int)$userId, $login);
+        $token = $this->authModel->getToken((int) $userId, $login);
 
         return [
             'token' => $token,
@@ -177,9 +175,9 @@ class User
      * @param string $login
      * @param string $password - plaintext password to verify
      *
-     * @throws Exception
-     *
      * @return array - user token, user ID, user login
+     *
+     * @throws Exception
      */
     public function login(string $login, string $password) : array
     {
@@ -195,12 +193,12 @@ class User
 
         //$token = $this->generateToken((int)$user['id'], $user['login']);
         $this->authModel = new Auth($this->db);
-        $token = $this->authModel->getToken((int)$user['id'], $login);
+        $token = $this->authModel->getToken((int) $user['id'], $login);
 
         return [
             'token' => $token,
             'user' => [
-                'id' => (int)$user['id'],
+                'id' => (int) $user['id'],
                 'login' => $user['login'],
             ],
         ];
@@ -212,9 +210,9 @@ class User
      * @param int $ownerId  - user ID who allow access
      * @param int $targetId - user ID who can viewe owner's book
      *
-     * @throws PDOException
-     *
      * @return void
+     *
+     * @throws PDOException
      */
     public function grantAccess(int $ownerId, int $targetId) : void
     {

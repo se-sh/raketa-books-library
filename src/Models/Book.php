@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Exception;
-use PDO;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
-
+use PDO;
 
 class Book
 {
@@ -25,16 +24,16 @@ class Book
     /**
      * Create new book record for specified user
      *
-     * @param int $userId             - owner user identifier
-     * @param string $title           - book title
-     * @param string $text            - book text
-     * @param string|null $externalId - [optional] ID of external book (google\mif)
-     *
-     * @throws PDOException
+     * @param int         $userId     - owner user identifier
+     * @param string      $title      - book title
+     * @param string      $text       - book text
+     * @param null|string $externalId - [optional] ID of external book (google\mif)
      *
      * @return int generated book ID (auto-increment primary key)
+     *
+     * @throws PDOException
      */
-    public function createBook(int $userId, string $title, string $text, ?string $externalId = null ) : int
+    public function createBook(int $userId, string $title, string $text, ?string $externalId = null) : int
     {
         $sql = <<<'SQL'
         INSERT INTO `books`
@@ -59,9 +58,9 @@ class Book
      *
      * @param int $userId
      *
-     * @throws PDOException
-     *
      * @return array - list of books
+     *
+     * @throws PDOException
      */
     public function getUserBooksByUser(int $userId) : array
     {
@@ -91,9 +90,9 @@ class Book
      *
      * @param int $id
      *
-     * @throws PDOException
+     * @return null|array - book or null if not found\deleted
      *
-     * @return array|null - book or null if not found\deleted
+     * @throws PDOException
      */
     public function getBookById(int $id) : ?array
     {
@@ -125,13 +124,13 @@ class Book
     /**
      * Update book title and text by book ID
      *
-     * @param int $id       - book ID to update
+     * @param int    $id    - book ID to update
      * @param string $title - new book title
      * @param string $text  - new book text
      *
-     * @throws PDOException
-     *
      * @return bool - true if book updated successfully, false if not found\deleted
+     *
+     * @throws PDOException
      */
     public function saveBook(int $id, string $title, string $text) : bool
     {
@@ -161,9 +160,9 @@ class Book
      *
      * @param int $id - book ID to delete
      *
-     * @throws PDOException
-     *
      * @return bool - true if book successfully deleted, false otherwise
+     *
+     * @throws PDOException
      */
     public function softDelete(int $id) : bool
     {
@@ -190,9 +189,9 @@ class Book
      *
      * @param int $id - book ID to restore
      *
-     * @throws PDOException
-     *
      * @return bool - true if book restored
+     *
+     * @throws PDOException
      */
     public function restoreBook(int $id) : bool
     {
@@ -220,43 +219,43 @@ class Book
      * @param string $query  - search query string
      * @param string $source - google or mif
      *
-     * @throws Exception
-     *
      * @return array - list of books
+     *
+     * @throws Exception
      */
     public function searchExternalBooks(string $query, string $source) : array
     {
-        $config = match($source) {
+        $config = match ($source) {
             'google' => [
                 'url' => 'https://www.googleapis.com/books/v1/volumes',
                 'query_key' => 'q',
                 'items_key' => 'items',
-                'book_in' => function($item) {
+                'book_in' => function ($item) {
                     $volumeInfo = $item['volumeInfo'] ?? [];
                     return [
                         'id' => $item['id'] ?? '',
                         'title' => $volumeInfo['title'] ?? '',
                         'url' => $volumeInfo['canonicalVolumeLink'] ?? '',
                     ];
-                }
+                },
             ],
             'mif' => [
                 'url' => 'https://www.mann-ivanov-ferber.ru/book/search.ajax',
                 'query_key' => 'q',
                 'items_key' => 'books',
-                'book_in' => function($book) {
+                'book_in' => function ($book) {
                     return [
                         'id' => $book['id'] ?? '',
                         'title' => $book['title'] ?? '',
                         'url' => $book['url'] ?? '',
                     ];
-                }
+                },
             ],
             default => throw new Exception('Source must be "google" or "mif"', 400)
         };
 
         $response = $this->httpClient->get($config['url'], [
-            'query' => [$config['query_key'] => urlencode($query)]
+            'query' => [$config['query_key'] => urlencode($query)],
         ]);
 
         $body = $response->getBody()->getContents();
