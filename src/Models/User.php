@@ -6,8 +6,6 @@ namespace App\Models;
 
 use App\Models\Auth;
 use Exception;
-use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
 use PDO;
 
 class User
@@ -18,10 +16,6 @@ class User
     public string $created_at;
     public ?string $updated_at;
 
-    private string $jwtSecret;
-    private string $jwtIssuer;
-    private int $jwtLifetime;
-
     private PDO $db;
 
     private Auth $authModel;
@@ -29,17 +23,6 @@ class User
     public function __construct(PDO $db)
     {
         $this->db = $db;
-        /*
-        $env = require __DIR__ . '/../../.env.php';
-
-        if (empty($env['JWT_SECRET']) || empty($env['JWT_ISSUER']) || empty($env['JWT_LIFETIME'])) {
-            throw new Exception('Config missing', 400);
-        }
-
-        $this->jwtSecret = $env['JWT_SECRET'];
-        $this->jwtIssuer = $env['JWT_ISSUER'];
-        $this->jwtLifetime = $env['JWT_LIFETIME'];
-        */
     }
 
     /**
@@ -229,28 +212,4 @@ class User
             ':target_id' => $targetId,
         ]);
     }
-    /*
-    private function generateToken(int $userId, string $login): string
-    {
-        $now = time();
-        $exp = $now + $this->jwtLifetime;
-
-        $payload = [
-            'iss' => $this->jwtIssuer,
-            'iat' => $now,
-            'exp' => $exp,
-            'sub' => $userId,
-            'login' => $login,
-        ];
-
-        return JWT::encode($payload, $this->jwtSecret, 'HS256');
-    }
-
-    public function verifyToken(string $token): array
-    {
-        $decoded = JWT::decode($token, new Key($this->jwtSecret, 'HS256'));
-
-        return (array)$decoded;
-    }
-    */
 }

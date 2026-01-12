@@ -7,16 +7,6 @@ use App\Core\Router;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-/*
-$routes = require __DIR__ . '/../src/config/routes.php';
-
-$db = Database::connect();
-
-$router = new Router($routes, $db);
-
-$router->run();
-*/
-
 try {
     $routes = require __DIR__ . '/../src/config/routes.php';
 

@@ -217,8 +217,6 @@ class BookController extends Controller
             throw new Exception('ID required', 400);
         }
 
-        //$user = $this->authModel->authenticate();
-
         $success = $this->bookModel->softDelete($bookId);
 
         if (!$success) {
@@ -244,8 +242,6 @@ class BookController extends Controller
         if ($bookId === 0) {
             throw new Exception('ID required', 400);
         }
-
-        //$user = $this->authModel->authenticate();
 
         $success = $this->bookModel->restoreBook($bookId);
 

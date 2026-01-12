@@ -46,7 +46,7 @@ class Router
 
         http_response_code(404);
         header('Content-Type: application/json');
-        //echo json_encode(['error' => 'Route not found']);
+
         throw new Exception('Route not found', 404);
     }
 
@@ -69,14 +69,6 @@ class Router
             error_log('DB ' . $exception->getMessage());
             $this->json(['error' => 'Database error'], 500);
         } catch (Exception $exception) {
-            /*
-            $status = match($error->getCode()) {
-                400, 422 => 400,
-                401 => 401,
-                404 => 404,
-                default => 400
-            };
-            */
             $status = $exception->getCode() ?: 400;
             $this->json(['error' => $exception->getMessage()], $status);
         } catch (Throwable $exception) {

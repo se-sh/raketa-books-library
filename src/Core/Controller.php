@@ -36,7 +36,6 @@ class Controller
         $raw = file_get_contents('php://input');
 
         if ($raw === false || $raw === '') {
-            //return [];
             throw new Exception('Cant read request', 400);
         }
 
@@ -44,7 +43,6 @@ class Controller
 
         if (!is_array($data)) {
             throw new Exception('JSON expected object or array', 400);
-            //return [];
         }
 
         return $data;

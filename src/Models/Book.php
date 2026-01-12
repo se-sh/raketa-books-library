@@ -116,8 +116,6 @@ class Book
             ':id' => $id,
         ]);
 
-        //$result = $query->fetchAll();
-        //return !empty($result) ? $result[0] : null;
         return $query->fetch() ?: null;
     }
 
