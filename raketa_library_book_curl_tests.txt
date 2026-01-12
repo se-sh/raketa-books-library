@@ -1,0 +1,72 @@
+# Register
+curl -X POST 'http://localhost/register' -H 'Content-Type: application/json' -d '{
+  "login": "testuser",
+  "password": "testpass",
+  "password_confirm": "testpass"
+}'
+
+# All users
+curl -X GET 'http://localhost/users'
+
+# Login
+curl -X POST 'http://localhost/login' -d '{
+  "login": "",
+  "password": "testpass"
+}'
+
+# Create book
+curl -X POST 'http://localhost/books' -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJib29rLWxpYnJhcnktYXBpIiwiaWF0IjoxNzY4MDgyMTgzLCJleHAiOjE3NjgwODU3ODMsInN1YiI6MSwibG9naW4iOiJ0ZXN0dXNlcjEifQ.wd-nt3GI7PqKgf239WJNsSib53f1euAlWF5zxpYPKsE' -d '{
+  "title": "Новая книга",
+  "text": "Текст новой книги"
+}'
+
+# Create book from Google
+curl -X POST 'http://localhost/books' -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJib29rLWxpYnJhcnktYXBpIiwiaWF0IjoxNzY4MDgyMTgzLCJleHAiOjE3NjgwODU3ODMsInN1YiI6MSwibG9naW4iOiJ0ZXN0dXNlcjEifQ.wd-nt3GI7PqKgf239WJNsSib53f1euAlWF5zxpYPKsE' -d '{
+  "externalId": "HvZ-DQAAQBAJ",
+  "title": "English Grammar. Test File",
+  "url": "https://play.google.com/store/books/details?id=HvZ-DQAAQBAJ"
+}'
+
+# Create book from MIF
+curl -X POST 'http://localhost/books' -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJib29rLWxpYnJhcnktYXBpIiwiaWF0IjoxNzY4MDgyMTgzLCJleHAiOjE3NjgwODU3ODMsInN1YiI6MSwibG9naW4iOiJ0ZXN0dXNlcjEifQ.wd-nt3GI7PqKgf239WJNsSib53f1euAlWF5zxpYPKsE' -d '{
+  "externalId": "14745",
+  "title": "Развитие силы воли",
+  "url": "http://www.mann-ivanov-ferber.ru/catalog/product/razvitie-sily-voli/"
+}'
+
+# Create book from file
+curl -X POST 'http://localhost/books' -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJib29rLWxpYnJhcnktYXBpIiwiaWF0IjoxNzY4MTM0MTQ3LCJleHAiOjE3NjgxMzc3NDcsInN1YiI6NSwibG9naW4iOiJzZXJnZXkifQ.nWfCQ4B5t8sI5dv008bBHMJFw1Rz3KV8mUOZ-jvp9Tk' \
+  -F 'title=Моя книга из файла' \
+  -F 'file=@/D:/urls.txt'
+
+# Open book by ID
+curl -X GET 'http://localhost/books/1' -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJib29rLWxpYnJhcnktYXBpIiwiaWF0IjoxNzY4MDgyMTgzLCJleHAiOjE3NjgwODU3ODMsInN1YiI6MSwibG9naW4iOiJ0ZXN0dXNlcjEifQ.wd-nt3GI7PqKgf239WJNsSib53f1euAlWF5zxpYPKsE'
+
+# Change book by ID
+curl -X PUT 'http://localhost/books/1' -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJib29rLWxpYnJhcnktYXBpIiwiaWF0IjoxNzY4MDgyMTgzLCJleHAiOjE3NjgwODU3ODMsInN1YiI6MSwibG9naW4iOiJ0ZXN0dXNlcjEifQ.wd-nt3GI7PqKgf239WJNsSib53f1euAlWF5zxpYPKsE' -d '{
+  "title": "Обновлённая книга",
+  "text": "Новый текст книги"
+}'
+
+# Delete book by ID
+curl -X DELETE 'http://localhost/books/1' -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJib29rLWxpYnJhcnktYXBpIiwiaWF0IjoxNzY4MDgyMTgzLCJleHAiOjE3NjgwODU3ODMsInN1YiI6MSwibG9naW4iOiJ0ZXN0dXNlcjEifQ.wd-nt3GI7PqKgf239WJNsSib53f1euAlWF5zxpYPKsE'
+
+# Restore book by ID
+curl -X POST 'http://localhost/books/3/restore' -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJib29rLWxpYnJhcnktYXBpIiwiaWF0IjoxNzY4MDgyMTgzLCJleHAiOjE3NjgwODU3ODMsInN1YiI6MSwibG9naW4iOiJ0ZXN0dXNlcjEifQ.wd-nt3GI7PqKgf239WJNsSib53f1euAlWF5zxpYPKsE'
+
+# Grant access by ID
+curl -X POST 'http://localhost/users/2/access' -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJib29rLWxpYnJhcnktYXBpIiwiaWF0IjoxNzY4MDgyMTgzLCJleHAiOjE3NjgwODU3ODMsInN1YiI6MSwibG9naW4iOiJ0ZXN0dXNlcjEifQ.wd-nt3GI7PqKgf239WJNsSib53f1euAlWF5zxpYPKsE' -d '{
+  "user_id": 2
+}'
+
+# Get all user books
+curl -X GET 'http://localhost/books' -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJib29rLWxpYnJhcnktYXBpIiwiaWF0IjoxNzY4MTM0MTQ3LCJleHAiOjE3NjgxMzc3NDcsInN1YiI6NSwibG9naW4iOiJzZXJnZXkifQ.nWfCQ4B5t8sI5dv008bBHMJFw1Rz3KV8mUOZ-jvp9Tk'
+
+# Get books list by user ID
+curl -X GET 'http://localhost/users/0/books' -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJib29rLWxpYnJhcnktYXBpIiwiaWF0IjoxNzY4MDg5MTIwLCJleHAiOjE3NjgwOTI3MjAsInN1YiI6MSwibG9naW4iOiJ0ZXN0dXNlcjEifQ.5byi8e0M1G-w4f0qQS8B5l3FabcbALPhPDOSlZtCyFs'
+
+# Search external book Google
+curl -X GET 'http://localhost/search?source=google&q=test'
+
+# Search external book MIF
+curl -X GET 'http://localhost/search?source=mif&q=test'
