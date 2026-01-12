@@ -24,9 +24,9 @@ class UserController extends Controller
     /**
      * Register new user
      *
-     * @throws Exception
-     *
      * @return void
+     *
+     * @throws Exception
      */
     public function register() : void
     {
@@ -44,7 +44,7 @@ class UserController extends Controller
 
         $this->json([
             'token' => $result['token'],
-            'user'  => $result['user'],
+            'user' => $result['user'],
         ], 201);
     }
 
@@ -65,16 +65,16 @@ class UserController extends Controller
      *
      * @param array $params - route parameters containing user ID who accept access
      *
-     * @throws Exception
-     *
      * @return void
+     *
+     * @throws Exception
      */
     public function grant(array $params) : void
     {
         $user = $this->authModel->authenticate();
         $ownerId = $user['sub'];
 
-        $targetId = (int)$params['id'];
+        $targetId = (int) $params['id'];
 
         if ($targetId === null || $ownerId === null) {
             throw new Exception('Missing ID', 400);
@@ -84,6 +84,4 @@ class UserController extends Controller
 
         $this->json(['message' => 'Access granted'], 200);
     }
-
-
 }

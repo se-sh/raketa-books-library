@@ -11,7 +11,6 @@ use PDO;
 
 /**
  * Class AuthController for authentication requests (user login).
- *
  */
 class AuthController extends Controller
 {
@@ -21,6 +20,7 @@ class AuthController extends Controller
     {
         $this->authModel = new Auth($db);
     }
+
     /**
      * User login
      *

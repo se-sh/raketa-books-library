@@ -34,13 +34,13 @@ class BookController extends Controller
      *
      * @param array $params - route parameters containing user ID
      *
-     * @throws Exception
-     *
      * @return void
+     *
+     * @throws Exception
      */
     public function userBooks(array $params) : void
     {
-        $userId = (int)$params['id'];
+        $userId = (int) $params['id'];
 
         if ($userId === 0) {
             throw new Exception('ID required', 400);
@@ -48,7 +48,7 @@ class BookController extends Controller
 
         $user = $this->authModel->authenticate();
 
-        $requestUserId = (int)$user['sub'];
+        $requestUserId = (int) $user['sub'];
 
         if ($userId !== $requestUserId) {
             $access = $this->accessModel->hasAccess($userId, $requestUserId);
@@ -71,7 +71,7 @@ class BookController extends Controller
     public function index() : void
     {
         $user = $this->authModel->authenticate();
-        $userId = (int)$user['sub'];
+        $userId = (int) $user['sub'];
 
         $books = $this->bookModel->getUserBooksByUser($userId);
 
@@ -81,11 +81,12 @@ class BookController extends Controller
     /**
      * Create book, source: from file or from user or from google\mif
      *
-     * @throws Exception
-     *
      * @return void
+     *
+     * @throws Exception
      */
-    public function store() : void {
+    public function store() : void
+    {
         $user = $this->authModel->authenticate();
         $userId = $user['sub'];
         $title = '';
@@ -112,7 +113,7 @@ class BookController extends Controller
         }
 
         if (empty($title)) {
-            throw new Exception('Title required',400);
+            throw new Exception('Title required', 400);
         }
 
         $id = $this->bookModel->createBook($userId, $title, $text, $externalId);
@@ -125,15 +126,15 @@ class BookController extends Controller
      *
      * @param array $params - route parameters containing book ID
      *
-     * @throws Exception
-     *
      * @return void
+     *
+     * @throws Exception
      */
     public function show(array $params) : void
     {
         $user = $this->authModel->authenticate();
 
-        $bookId = (int)$params['id'];
+        $bookId = (int) $params['id'];
 
         if ($bookId === 0) {
             throw new Exception('ID required', 400);
@@ -145,7 +146,7 @@ class BookController extends Controller
             throw new Exception('Book not found', 404);
         }
 
-        $requestUserId = (int)$user['sub'];
+        $requestUserId = (int) $user['sub'];
 
         if ($book['user_id'] !== $requestUserId) {
             $access = $this->accessModel->hasAccess($book['user_id'], $requestUserId);
@@ -158,9 +159,9 @@ class BookController extends Controller
         $this->json([
             'data' => [
                 'title' => $book['title'],
-                'text' => $book['text']
-            ]
-        ],200);
+                'text' => $book['text'],
+            ],
+        ], 200);
     }
 
     /**
@@ -168,9 +169,9 @@ class BookController extends Controller
      *
      * @param array $params - route parameters containing book ID
      *
-     * @throws Exception
-     *
      * @return void
+     *
+     * @throws Exception
      */
     public function update(array $params) : void
     {
@@ -184,7 +185,7 @@ class BookController extends Controller
             throw new Exception('Title required', 400);
         }
 
-        $bookId = (int)$params['id'];
+        $bookId = (int) $params['id'];
 
         if ($bookId === 0) {
             throw new Exception('ID required', 400);
@@ -204,13 +205,13 @@ class BookController extends Controller
      *
      * @param array $params - route parameters containing book ID
      *
-     * @throws Exception
-     *
      * @return void
+     *
+     * @throws Exception
      */
     public function destroy(array $params) : void
     {
-        $bookId = (int)$params['id'];
+        $bookId = (int) $params['id'];
 
         if ($bookId === 0) {
             throw new Exception('ID required', 400);
@@ -232,13 +233,13 @@ class BookController extends Controller
      *
      * @param array $params - route parameters containing book ID
      *
-     * @throws Exception
-     *
      * @return void
+     *
+     * @throws Exception
      */
     public function restore(array $params) : void
     {
-        $bookId = (int)$params['id'];
+        $bookId = (int) $params['id'];
 
         if ($bookId === 0) {
             throw new Exception('ID required', 400);
@@ -258,9 +259,9 @@ class BookController extends Controller
     /**
      * Search Internet book: google or mif
      *
-     * @throws Exception
-     *
      * @return void
+     *
+     * @throws Exception
      */
     public function searchExternalBooks() : void
     {
